@@ -20,10 +20,8 @@ const AppContent: React.FC = () => {
   };
 
   const handleToggleFavorite = (propertyId: string) => {
-    setFavorites(prev => 
-      prev.includes(propertyId)
-        ? prev.filter(id => id !== propertyId)
-        : [...prev, propertyId]
+    setFavorites(prev =>
+      prev.includes(propertyId) ? prev.filter(id => id !== propertyId) : [...prev, propertyId]
     );
   };
 
@@ -33,52 +31,49 @@ const AppContent: React.FC = () => {
 
   return (
     <>
-      <Navbar 
-        onConnectWallet={handleConnectWallet}
-        walletConnected={walletConnected}
-      />
-      
+      <Navbar onConnectWallet={handleConnectWallet} walletConnected={walletConnected} />
+
       <Routes>
-        <Route 
-          path="/" 
+        <Route
+          path="/"
           element={
-            <HomePage 
+            <HomePage
               onToggleFavorite={handleToggleFavorite}
               onPropertyClick={handlePropertyClick}
             />
-          } 
+          }
         />
-        <Route 
-          path="/listings" 
+        <Route
+          path="/listings"
           element={
-            <ListingsPage 
+            <ListingsPage
               onToggleFavorite={handleToggleFavorite}
               onPropertyClick={handlePropertyClick}
             />
-          } 
+          }
         />
-        <Route 
-          path="/property/:id" 
-          element={<PropertyDetailPage onToggleFavorite={handleToggleFavorite} />} 
+        <Route
+          path="/property/:id"
+          element={<PropertyDetailPage onToggleFavorite={handleToggleFavorite} />}
         />
-        <Route 
-          path="/favorites" 
+        <Route
+          path="/favorites"
           element={
-            <FavoritesPage 
+            <FavoritesPage
               favorites={favorites}
               onToggleFavorite={handleToggleFavorite}
               onPropertyClick={handlePropertyClick}
             />
-          } 
+          }
         />
-        <Route 
-          path="/dashboard" 
+        <Route
+          path="/dashboard"
           element={
-            <DashboardPage 
+            <DashboardPage
               walletConnected={walletConnected}
               onConnectWallet={handleConnectWallet}
             />
-          } 
+          }
         />
       </Routes>
     </>

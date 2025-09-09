@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { 
-  ArrowLeft, 
-  Heart, 
-  Share2, 
-  MapPin, 
-  Bed, 
-  Bath, 
-  Square, 
-  Car, 
-  Calendar,
+import {
+  ArrowLeft,
+  Heart,
+  Share2,
+  MapPin,
+  Bed,
+  Bath,
+  Square,
+  Car,
   Wallet,
   Shield,
   CheckCircle,
-  Star
+  Star,
 } from 'lucide-react';
 import { mockProperties } from '../data/mockData';
 
@@ -54,12 +53,12 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(59,130,246,0.04),transparent_60%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(139,92,246,0.04),transparent_60%)]"></div>
       <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-white/50 to-transparent"></div>
-      
+
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200/50 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Link 
-            to="/listings" 
+          <Link
+            to="/listings"
             className="flex items-center text-gray-600 hover:text-blue-600 transition-colors group"
           >
             <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
@@ -75,24 +74,30 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
             {/* Image Gallery */}
             <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-xl border border-white/20 overflow-hidden mb-8">
               <div className="relative">
-                <img 
-                  src={property.images[currentImageIndex]} 
+                <img
+                  src={property.images[currentImageIndex]}
                   alt={property.title}
                   className="w-full h-96 object-cover"
                 />
                 <div className="absolute top-4 left-4">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    property.status === 'for-sale' 
-                      ? 'bg-emerald-500 text-white' 
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-medium ${
+                      property.status === 'for-sale'
+                        ? 'bg-emerald-500 text-white'
+                        : property.status === 'for-rent'
+                          ? 'bg-blue-500 text-white'
+                          : property.status === 'sold'
+                            ? 'bg-gray-500 text-white'
+                            : 'bg-orange-500 text-white'
+                    }`}
+                  >
+                    {property.status === 'for-sale'
+                      ? 'For Sale'
                       : property.status === 'for-rent'
-                      ? 'bg-blue-500 text-white'
-                      : property.status === 'sold'
-                      ? 'bg-gray-500 text-white'
-                      : 'bg-orange-500 text-white'
-                  }`}>
-                    {property.status === 'for-sale' ? 'For Sale' : 
-                     property.status === 'for-rent' ? 'For Rent' :
-                     property.status === 'sold' ? 'Sold' : 'Rented'}
+                        ? 'For Rent'
+                        : property.status === 'sold'
+                          ? 'Sold'
+                          : 'Rented'}
                   </span>
                 </div>
                 <div className="absolute top-4 right-4 flex space-x-2">
@@ -104,8 +109,8 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
                   <button
                     onClick={() => onToggleFavorite(property.id)}
                     className={`p-2 rounded-full transition-all duration-200 ${
-                      property.favorited 
-                        ? 'bg-red-500 text-white hover:bg-red-600' 
+                      property.favorited
+                        ? 'bg-red-500 text-white hover:bg-red-600'
                         : 'bg-white/80 text-gray-600 hover:bg-white hover:text-red-500'
                     }`}
                   >
@@ -116,7 +121,7 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
                   </button>
                 </div>
               </div>
-              
+
               {/* Image Thumbnails */}
               {property.images.length > 1 && (
                 <div className="p-4 bg-gray-50 flex space-x-2 overflow-x-auto">
@@ -125,8 +130,8 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
                       className={`flex-shrink-0 w-20 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-                        currentImageIndex === index 
-                          ? 'border-blue-500 shadow-md' 
+                        currentImageIndex === index
+                          ? 'border-blue-500 shadow-md'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
@@ -152,9 +157,7 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
                     {formatPrice(property.price)}
                   </div>
                   {property.isNFT && (
-                    <div className="text-sm text-gray-600">
-                      Blockchain Verified
-                    </div>
+                    <div className="text-sm text-gray-600">Blockchain Verified</div>
                   )}
                 </div>
               </div>
@@ -179,7 +182,9 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
                   <div className="flex items-center justify-center mb-2">
                     <Square className="w-6 h-6 text-blue-600" />
                   </div>
-                  <div className="text-2xl font-bold text-gray-900">{property.sqft.toLocaleString()}</div>
+                  <div className="text-2xl font-bold text-gray-900">
+                    {property.sqft.toLocaleString()}
+                  </div>
                   <div className="text-sm text-gray-600">Square Feet</div>
                 </div>
                 <div className="text-center">
@@ -234,12 +239,16 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
                   <div className="flex items-start space-x-3">
                     <Shield className="w-6 h-6 text-purple-600 mt-1" />
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Blockchain Verified Property</h4>
+                      <h4 className="font-semibold text-gray-900 mb-2">
+                        Blockchain Verified Property
+                      </h4>
                       <p className="text-gray-700 mb-3">
-                        This property is represented as an NFT on the blockchain, ensuring transparent ownership and secure transactions.
+                        This property is represented as an NFT on the blockchain, ensuring
+                        transparent ownership and secure transactions.
                       </p>
                       <div className="text-xs text-gray-600">
-                        <span className="font-medium">Wallet Address:</span> {property.walletAddress}
+                        <span className="font-medium">Wallet Address:</span>{' '}
+                        {property.walletAddress}
                       </div>
                     </div>
                   </div>
@@ -267,7 +276,7 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
                 >
                   Contact Agent
                 </button>
-                
+
                 <button className="w-full border-2 border-blue-600 text-blue-600 hover:bg-blue-50 py-3 px-4 rounded-lg font-semibold transition-colors">
                   Schedule Tour
                 </button>
@@ -283,8 +292,8 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
               {/* Agent Info */}
               <div className="border-t pt-6">
                 <div className="flex items-center space-x-3 mb-4">
-                  <img 
-                    src="https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                  <img
+                    src="https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg?auto=compress&cs=tinysrgb&w=100"
                     alt="Agent"
                     className="w-12 h-12 rounded-full object-cover"
                   />
@@ -293,14 +302,14 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
                     <div className="text-sm text-gray-600">Licensed Real Estate Agent</div>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center space-x-1 mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
                   ))}
                   <span className="text-sm text-gray-600 ml-2">(4.9/5 · 127 reviews)</span>
                 </div>
-                
+
                 <div className="space-y-2 text-sm text-gray-600">
                   <div>📧 sarah.johnson@propchain.com</div>
                   <div>📱 +1 (555) 123-4567</div>
@@ -314,34 +323,56 @@ export const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ onToggle
               <h3 className="text-lg font-semibold mb-4">Mortgage Calculator</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Down Payment</label>
-                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">
+                  <label
+                    htmlFor="downPayment"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Down Payment
+                  </label>
+                  <select
+                    id="downPayment"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+                  >
                     <option>20% ($170,000)</option>
                     <option>15% ($127,500)</option>
                     <option>10% ($85,000)</option>
                     <option>5% ($42,500)</option>
                   </select>
                 </div>
-                
+
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Interest Rate</label>
-                  <input 
-                    type="text" 
-                    defaultValue="6.5%" 
+                  <label
+                    htmlFor="interestRate"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Interest Rate
+                  </label>
+                  <input
+                    id="interestRate"
+                    type="text"
+                    defaultValue="6.5%"
                     className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Loan Term</label>
-                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">
+                  <label
+                    htmlFor="loanTerm"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
+                    Loan Term
+                  </label>
+                  <select
+                    id="loanTerm"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500"
+                  >
                     <option>30 years</option>
                     <option>25 years</option>
                     <option>20 years</option>
                     <option>15 years</option>
                   </select>
                 </div>
-                
+
                 <div className="border-t pt-4">
                   <div className="flex justify-between text-lg font-semibold">
                     <span>Monthly Payment:</span>

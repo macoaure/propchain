@@ -13,12 +13,12 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
   filters,
   onFiltersChange,
   showFilters,
-  onToggleFilters
+  onToggleFilters,
 }) => {
-  const handleFilterChange = (key: keyof PropertyFilters, value: any) => {
+  const handleFilterChange = (key: keyof PropertyFilters, value: string | number | undefined) => {
     onFiltersChange({
       ...filters,
-      [key]: value === '' ? undefined : value
+      [key]: value === '' ? undefined : value,
     });
   };
 
@@ -26,7 +26,9 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
     onFiltersChange({});
   };
 
-  const hasActiveFilters = Object.values(filters).some(value => value !== undefined && value !== '');
+  const hasActiveFilters = Object.values(filters).some(
+    value => value !== undefined && value !== ''
+  );
 
   return (
     <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-xl border border-white/30">
@@ -38,7 +40,7 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
             type="text"
             placeholder="Search by location, property type, or features..."
             value={filters.location || ''}
-            onChange={(e) => handleFilterChange('location', e.target.value)}
+            onChange={e => handleFilterChange('location', e.target.value)}
             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           />
         </div>
@@ -52,12 +54,10 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
             <Filter className="w-4 h-4" />
             <span>Filters</span>
             {hasActiveFilters && (
-              <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
-                Active
-              </span>
+              <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">Active</span>
             )}
           </button>
-          
+
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
@@ -76,33 +76,52 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Price Range */}
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Min Price</label>
+              <label htmlFor="minPrice" className="block text-sm font-medium text-gray-700">
+                Min Price
+              </label>
               <input
+                id="minPrice"
                 type="number"
                 placeholder="$0"
                 value={filters.minPrice || ''}
-                onChange={(e) => handleFilterChange('minPrice', e.target.value ? parseInt(e.target.value) : undefined)}
+                onChange={e =>
+                  handleFilterChange(
+                    'minPrice',
+                    e.target.value ? parseInt(e.target.value) : undefined
+                  )
+                }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
-            
+
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Max Price</label>
+              <label htmlFor="maxPrice" className="block text-sm font-medium text-gray-700">
+                Max Price
+              </label>
               <input
+                id="maxPrice"
                 type="number"
                 placeholder="Any"
                 value={filters.maxPrice || ''}
-                onChange={(e) => handleFilterChange('maxPrice', e.target.value ? parseInt(e.target.value) : undefined)}
+                onChange={e =>
+                  handleFilterChange(
+                    'maxPrice',
+                    e.target.value ? parseInt(e.target.value) : undefined
+                  )
+                }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
             {/* Property Type */}
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Type</label>
+              <label htmlFor="propertyType" className="block text-sm font-medium text-gray-700">
+                Type
+              </label>
               <select
+                id="propertyType"
                 value={filters.type || ''}
-                onChange={(e) => handleFilterChange('type', e.target.value)}
+                onChange={e => handleFilterChange('type', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">All Types</option>
@@ -115,10 +134,13 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
 
             {/* Status */}
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Status</label>
+              <label htmlFor="propertyStatus" className="block text-sm font-medium text-gray-700">
+                Status
+              </label>
               <select
+                id="propertyStatus"
                 value={filters.status || ''}
-                onChange={(e) => handleFilterChange('status', e.target.value)}
+                onChange={e => handleFilterChange('status', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">All Status</option>
@@ -131,10 +153,18 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
 
             {/* Bedrooms */}
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Bedrooms</label>
+              <label htmlFor="bedrooms" className="block text-sm font-medium text-gray-700">
+                Bedrooms
+              </label>
               <select
+                id="bedrooms"
                 value={filters.bedrooms || ''}
-                onChange={(e) => handleFilterChange('bedrooms', e.target.value ? parseInt(e.target.value) : undefined)}
+                onChange={e =>
+                  handleFilterChange(
+                    'bedrooms',
+                    e.target.value ? parseInt(e.target.value) : undefined
+                  )
+                }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Any</option>
@@ -148,10 +178,18 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
 
             {/* Bathrooms */}
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Bathrooms</label>
+              <label htmlFor="bathrooms" className="block text-sm font-medium text-gray-700">
+                Bathrooms
+              </label>
               <select
+                id="bathrooms"
                 value={filters.bathrooms || ''}
-                onChange={(e) => handleFilterChange('bathrooms', e.target.value ? parseInt(e.target.value) : undefined)}
+                onChange={e =>
+                  handleFilterChange(
+                    'bathrooms',
+                    e.target.value ? parseInt(e.target.value) : undefined
+                  )
+                }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">Any</option>

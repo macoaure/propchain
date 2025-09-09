@@ -8,10 +8,10 @@ interface PropertyCardProps {
   onClick: (id: string) => void;
 }
 
-export const PropertyCard: React.FC<PropertyCardProps> = ({ 
-  property, 
-  onToggleFavorite, 
-  onClick 
+export const PropertyCard: React.FC<PropertyCardProps> = ({
+  property,
+  onToggleFavorite,
+  onClick,
 }) => {
   const formatPrice = (price: number) => {
     if (property.status === 'for-rent' || property.status === 'rented') {
@@ -21,29 +21,43 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
   };
 
   return (
-    <div 
+    <div
       className="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group cursor-pointer transform hover:scale-[1.02] border border-white/20"
       onClick={() => onClick(property.id)}
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          onClick(property.id);
+        }
+      }}
+      tabIndex={0}
+      role="button"
+      aria-label={`View details for ${property.title}`}
     >
       <div className="relative">
-        <img 
-          src={property.images[0]} 
+        <img
+          src={property.images[0]}
           alt={property.title}
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-3 left-3">
-          <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-            property.status === 'for-sale' 
-              ? 'bg-emerald-500 text-white' 
+          <span
+            className={`px-3 py-1 rounded-full text-xs font-medium ${
+              property.status === 'for-sale'
+                ? 'bg-emerald-500 text-white'
+                : property.status === 'for-rent'
+                  ? 'bg-blue-500 text-white'
+                  : property.status === 'sold'
+                    ? 'bg-gray-500 text-white'
+                    : 'bg-orange-500 text-white'
+            }`}
+          >
+            {property.status === 'for-sale'
+              ? 'For Sale'
               : property.status === 'for-rent'
-              ? 'bg-blue-500 text-white'
-              : property.status === 'sold'
-              ? 'bg-gray-500 text-white'
-              : 'bg-orange-500 text-white'
-          }`}>
-            {property.status === 'for-sale' ? 'For Sale' : 
-             property.status === 'for-rent' ? 'For Rent' :
-             property.status === 'sold' ? 'Sold' : 'Rented'}
+                ? 'For Rent'
+                : property.status === 'sold'
+                  ? 'Sold'
+                  : 'Rented'}
           </span>
         </div>
         <div className="absolute top-3 right-3 flex space-x-2">
@@ -53,13 +67,13 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
             </span>
           )}
           <button
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation();
               onToggleFavorite(property.id);
             }}
             className={`p-2 rounded-full transition-all duration-200 ${
-              property.favorited 
-                ? 'bg-red-500 text-white hover:bg-red-600' 
+              property.favorited
+                ? 'bg-red-500 text-white hover:bg-red-600'
                 : 'bg-white/80 text-gray-600 hover:bg-white hover:text-red-500'
             }`}
           >
@@ -67,7 +81,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           </button>
         </div>
       </div>
-      
+
       <div className="p-6">
         <div className="flex justify-between items-start mb-3">
           <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors">
@@ -75,12 +89,12 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           </h3>
           <span className="text-xl font-bold text-blue-600">{formatPrice(property.price)}</span>
         </div>
-        
+
         <div className="flex items-center text-gray-500 mb-4">
           <MapPin className="w-4 h-4 mr-1" />
           <span className="text-sm">{property.location}</span>
         </div>
-        
+
         <div className="flex items-center justify-between text-gray-600 text-sm">
           <div className="flex items-center space-x-4">
             <div className="flex items-center">

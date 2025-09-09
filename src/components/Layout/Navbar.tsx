@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Search, Heart, User, Wallet } from 'lucide-react';
+import { Home, Wallet } from 'lucide-react';
 
 interface NavbarProps {
   onConnectWallet: () => void;
@@ -26,13 +26,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnectWallet, walletConnected
               </span>
             </Link>
           </div>
-          
+
           <div className="hidden md:flex items-center space-x-8">
             <Link
               to="/"
               className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                isActive('/') 
-                  ? 'text-blue-600 border-b-2 border-blue-600' 
+                isActive('/')
+                  ? 'text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-600 hover:text-blue-600'
               }`}
             >
@@ -41,8 +41,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnectWallet, walletConnected
             <Link
               to="/listings"
               className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                isActive('/listings') 
-                  ? 'text-blue-600 border-b-2 border-blue-600' 
+                isActive('/listings')
+                  ? 'text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-600 hover:text-blue-600'
               }`}
             >
@@ -51,8 +51,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnectWallet, walletConnected
             <Link
               to="/favorites"
               className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                isActive('/favorites') 
-                  ? 'text-blue-600 border-b-2 border-blue-600' 
+                isActive('/favorites')
+                  ? 'text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-600 hover:text-blue-600'
               }`}
             >
@@ -61,8 +61,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnectWallet, walletConnected
             <Link
               to="/dashboard"
               className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                isActive('/dashboard') 
-                  ? 'text-blue-600 border-b-2 border-blue-600' 
+                isActive('/dashboard')
+                  ? 'text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-600 hover:text-blue-600'
               }`}
             >
