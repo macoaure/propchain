@@ -2,7 +2,7 @@
 
 PropChain is a blockchain-based property marketplace that allows users to browse, favorite, and interact with property listings using their crypto wallets.
 
-![PropChain Banner](https://via.placeholder.com/800x200?text=PropChain+Marketplace)
+![PropChain Banner](https://placehold.co/800x200?text=PropChain+Marketplace)
 
 ## Table of Contents
 
@@ -101,6 +101,7 @@ In the existing app, there is a "Connect Wallet" button. Currently, it works as 
 ### Your task: Implement real functionality so that it connects to MetaMask when clicked.
 
 When the user clicks "Connect Wallet":
+
 - A modal should open.
 - The modal should show a list of available wallets (for this test, supporting MetaMask is enough).
 - On selecting MetaMask:
@@ -113,6 +114,7 @@ When the user clicks "Connect Wallet":
 ### 🎯 What We're Evaluating
 
 We are not looking for a production-ready dApp or smart contract integration. We mainly want to evaluate your blockchain integration fundamentals and code style:
+
 - Clean, readable, and well-structured TypeScript/React code
 - Proper use of async/await and error handling (e.g., user rejects connection)
 - UI/UX handling (modal state, connection state, error messages)
