@@ -23,6 +23,7 @@
     "ci": "npm run lint && npm run test && npm run playwright:test && npm run cypress:run"
   },
   "dependencies": {
+    "@metamask/sdk": "^0.33.0",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
