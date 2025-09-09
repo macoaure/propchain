@@ -1,14 +1,22 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Wallet } from 'lucide-react';
+import WalletConnectButton from '../WalletConnect/WalletConnectButton';
+import { useWallet } from '../../context/WalletContext';
 
 interface NavbarProps {
-  onConnectWallet: () => void;
-  walletConnected: boolean;
+  onConnectWallet?: () => void;
+  walletConnected?: boolean;
+  useRealWallet?: boolean;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onConnectWallet, walletConnected }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  onConnectWallet,
+  walletConnected = false,
+  useRealWallet = false
+}) => {
   const location = useLocation();
+  const { walletInfo } = useWallet();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -30,60 +38,76 @@ export const Navbar: React.FC<NavbarProps> = ({ onConnectWallet, walletConnected
           <div className="hidden md:flex items-center space-x-8">
             <Link
               to="/"
-              className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                isActive('/')
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-600 hover:text-blue-600'
-              }`}
+              className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${isActive('/')
+                ? 'text-blue-600 border-b-2 border-blue-600'
+                : 'text-gray-600 hover:text-blue-600'
+                }`}
             >
               Home
             </Link>
             <Link
               to="/listings"
-              className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                isActive('/listings')
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-600 hover:text-blue-600'
-              }`}
+              className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${isActive('/listings')
+                ? 'text-blue-600 border-b-2 border-blue-600'
+                : 'text-gray-600 hover:text-blue-600'
+                }`}
             >
               Listings
             </Link>
             <Link
               to="/favorites"
-              className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                isActive('/favorites')
-                  ? 'text-blue-600 border-b-2 border-blue-600'
-                  : 'text-gray-600 hover:text-blue-600'
-              }`}
+              className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${isActive('/favorites')
+                ? 'text-blue-600 border-b-2 border-blue-600'
+                : 'text-gray-600 hover:text-blue-600'
+                }`}
             >
               Favorites
             </Link>
-            <Link
-              to="/dashboard"
-              className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                isActive('/dashboard')
+            {useRealWallet ? (
+              <>
+                {/* Only show Dashboard link if real wallet is connected */}
+                {walletInfo.isConnected && (
+                  <Link
+                    to="/dashboard"
+                    className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${isActive('/dashboard')
+                      ? 'text-blue-600 border-b-2 border-blue-600'
+                      : 'text-gray-600 hover:text-blue-600'
+                      }`}
+                  >
+                    Dashboard
+                  </Link>
+                )}
+              </>
+            ) : (
+              <Link
+                to="/dashboard"
+                className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${isActive('/dashboard')
                   ? 'text-blue-600 border-b-2 border-blue-600'
                   : 'text-gray-600 hover:text-blue-600'
-              }`}
-            >
-              Dashboard
-            </Link>
+                  }`}
+              >
+                Dashboard
+              </Link>
+            )}
           </div>
 
           <div className="flex items-center space-x-4">
-            <button
-              onClick={onConnectWallet}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
-                walletConnected
+            {useRealWallet ? (
+              <WalletConnectButton />
+            ) : (
+              <button
+                onClick={onConnectWallet}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-300 ${walletConnected
                   ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
                   : 'bg-gradient-to-r from-blue-600 to-emerald-500 text-white hover:from-blue-700 hover:to-emerald-600 shadow-lg hover:shadow-xl transform hover:scale-105'
-              }`}
-            >
-              <Wallet className="w-4 h-4" />
-              <span className="hidden sm:block">
-                {walletConnected ? 'Wallet Connected' : 'Connect Wallet'}
-              </span>
-            </button>
+                  }`}
+              >
+                <Wallet className="w-4 h-4" />
+                <span className="hidden sm:block">
+                  {walletConnected ? 'Wallet Connected' : 'Connect Wallet'}
+                </span>
+              </button>
+            )}
           </div>
         </div>
       </div>
