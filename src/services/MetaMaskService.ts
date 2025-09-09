@@ -92,9 +92,7 @@ export class MetaMaskService {
 
       return accounts || [];
     } catch (error: any) {
-      throw new WalletConnectionError(
-        error.message || 'Failed to get accounts'
-      );
+      throw new WalletConnectionError(error.message || 'Failed to get accounts');
     }
   }
 
@@ -121,7 +119,10 @@ export class MetaMaskService {
    * This helps users properly disconnect their wallet from the dApp
    */
   public openDisconnectTutorial(): void {
-    window.open('https://support.metamask.io/more-web3/dapps/disconnect-wallet-from-a-dapp/', '_blank');
+    window.open(
+      'https://support.metamask.io/more-web3/dapps/disconnect-wallet-from-a-dapp/',
+      '_blank'
+    );
   }
 }
 

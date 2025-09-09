@@ -20,8 +20,8 @@ const WalletContext = createContext<WalletContextProps>({
   walletInfo: initialWalletInfo,
   isConnecting: false,
   error: null,
-  connectMetaMask: async () => { },
-  disconnectWallet: () => { },
+  connectMetaMask: async () => {},
+  disconnectWallet: () => {},
   getDisplayAddress: () => '',
 });
 
